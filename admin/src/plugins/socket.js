@@ -2,7 +2,7 @@ import Vue from "vue";
 import SocketIO from "socket.io-client";
 
 const connection = SocketIO(
-  proccess.env.VUE_APP_API || "http://localhost:3000",
+  process.env.VUE_APP_API || "http://localhost:3000",
   {
     //   channel: "order",
     withCredentials: false,
