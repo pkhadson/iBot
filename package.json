@@ -1,0 +1,27 @@
+{
+  "name": "iBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/apollo": "^10.0.9",
+    "@nestjs/graphql": "^10.0.9",
+    "@open-wa/wa-automate": "^4.35.10",
+    "apollo-server-express": "^3.6.7",
+    "axios": "^0.26.1",
+    "cpf-cnpj-validator": "^1.0.3",
+    "graphql": "^16.3.0",
+    "nodemon": "^2.0.15",
+    "socket.io-client": "^4.4.1",
+    "sqlite3": "^5.0.2",
+    "trello": "^0.11.0",
+    "typeorm": "^0.3.4",
+    "venom-bot": "^4.0.10"
+  }
+}
