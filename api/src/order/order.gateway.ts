@@ -10,6 +10,8 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { Server, Socket } from 'socket.io';
 import { OrderP } from 'src/payment/gateways/pagarme.gateway';
 import { Between } from 'typeorm';
+import fs from 'fs';
+import path from 'path';
 
 @WebSocketGateway({
   cors: true,
@@ -27,6 +29,15 @@ export class OrderGateway {
   }
 
   sendNumber() {
+    try {
+      if (
+        fs.readFileSync(path.join(__dirname, '../../run'), 'utf-8').trim() !==
+        'S'
+      )
+        return;
+    } catch (err) {
+      return console.error(err);
+    }
     this.bots.forEach(async ([id, socket]: [string, Socket]) => {
       const number = await this.orderService.customerRepository.findOne({
         where: {
