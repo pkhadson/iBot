@@ -65,7 +65,7 @@ export class OrderP {
           amount: this.amount_pay * 100,
           payment_method: 'checkout',
           checkout: {
-            expires_in: 120,
+            expires_in: 1200,
             billing_address_editable: false,
             customer_editable: true,
             accepted_payment_methods: ['credit_card', 'boleto', 'pix'],
