@@ -29,3 +29,4 @@ teste
 
 *.sqlite
 *.sqlite.bak
+package-lock.json
