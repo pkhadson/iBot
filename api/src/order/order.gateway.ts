@@ -29,6 +29,13 @@ export class OrderGateway {
   }
 
   sendNumber() {
+    const intervals = [15000, 20000];
+
+    setTimeout(
+      () => this.sendNumber(),
+      intervals[0] + Math.random() * intervals[1],
+    );
+
     try {
       if (
         fs.readFileSync(path.join(__dirname, '../../run'), 'utf-8').trim() !==
@@ -65,13 +72,6 @@ export class OrderGateway {
         });
       }
     });
-
-    const intervals = [15000, 20000];
-
-    setTimeout(
-      () => this.sendNumber(),
-      intervals[0] + Math.random() * intervals[1],
-    );
   }
 
   @SubscribeMessage('createOrder')
