@@ -10,7 +10,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { Server, Socket } from 'socket.io';
 import { OrderP } from 'src/payment/gateways/pagarme.gateway';
 import { Between } from 'typeorm';
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 import path from 'path';
 
 @WebSocketGateway({
@@ -38,8 +38,7 @@ export class OrderGateway {
 
     try {
       if (
-        fs.readFileSync(path.join(__dirname, '../../run'), 'utf-8').trim() !==
-        'S'
+        readFileSync(path.join(__dirname, '../../run'), 'utf-8').trim() !== 'S'
       )
         return;
     } catch (err) {
