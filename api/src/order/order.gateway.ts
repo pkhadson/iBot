@@ -11,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 import { OrderP } from 'src/payment/gateways/pagarme.gateway';
 import { Between } from 'typeorm';
 import { readFileSync } from 'fs';
-import path from 'path';
+import { join } from 'path';
 
 @WebSocketGateway({
   cors: true,
@@ -37,9 +37,7 @@ export class OrderGateway {
     );
 
     try {
-      if (
-        readFileSync(path.join(__dirname, '../../run'), 'utf-8').trim() !== 'S'
-      )
+      if (readFileSync(join(__dirname, '../../run'), 'utf-8').trim() !== 'S')
         return;
     } catch (err) {
       return console.error(err);
