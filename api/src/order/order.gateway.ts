@@ -10,7 +10,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { Server, Socket } from 'socket.io';
 import { OrderP } from 'src/payment/gateways/pagarme.gateway';
 import { Between } from 'typeorm';
-import fs from 'fs';
+import * as fs from 'fs';
 import path from 'path';
 
 @WebSocketGateway({
