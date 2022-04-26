@@ -12,7 +12,7 @@ import * as path from 'path';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: path.join(__dirname, '../../db/db/data.sqlite'),
+      database: '/data.sqlite',
       logging: false,
       entities: [path.join(__dirname, '/**/*.entity.*')],
       synchronize: true,
