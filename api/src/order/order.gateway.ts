@@ -49,7 +49,7 @@ export class OrderGateway {
           birthDate: Between('01-01-1961 00:00:00', '31-12-1997 00:00:00'),
         },
         order: {
-          cpf: 'DESC',
+          phone: 'DESC',
         },
       });
 

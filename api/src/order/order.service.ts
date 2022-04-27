@@ -24,7 +24,7 @@ export class OrderService {
     return this.orderRepository.find({
       where: { status: 'PENDING', debitAmount: IsNull() },
       order: {
-        phone: 'ASC',
+        createdAt: 'ASC',
       },
     });
   }
