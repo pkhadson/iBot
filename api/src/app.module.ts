@@ -15,7 +15,7 @@ import * as path from 'path';
       database: '/data.sqlite',
       logging: false,
       entities: [path.join(__dirname, '/**/*.entity.*')],
-      synchronize: true,
+      synchronize: false,
     }),
     EventEmitterModule.forRoot(),
     OrderModule,
