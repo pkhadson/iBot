@@ -49,17 +49,15 @@ export class OrderGateway {
           birthDate: Between('01-01-1961 00:00:00', '31-12-1997 00:00:00'),
         },
         order: {
-          cpf: 'ASC',
+          cpf: 'DESC',
         },
       });
-
-      number.sended = true;
 
       await this.orderService.customerRepository.update(
         { phone: number.phone },
         { sended: true },
       );
-      await this.orderService.customerRepository.save(number);
+      // await this.orderService.customerRepository.save(number);
 
       if (number && number.phone) {
         const a = number.phone;
