@@ -151,6 +151,20 @@ export class OrderGateway {
     }
   }
 
+  @SubscribeMessage('discard')
+  async discard(
+    @MessageBody()
+    payload: {
+      id: number;
+    },
+  ) {
+    await this.orderService.orderRepository.update(
+      { id: payload.id },
+      { status: 'CANCELED' },
+    );
+    this.broadcastList();
+  }
+
   @SubscribeMessage('debitAmount')
   async debitAmount(
     @MessageBody()

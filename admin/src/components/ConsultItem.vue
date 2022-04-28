@@ -17,7 +17,24 @@
           <v-list-item-subtitle>{{ data.client_number }}</v-list-item-subtitle>
         </v-list-item-content>
         <v-spacer />
+
         <v-list-item-action class="flex-row d-flex flex-nowrap">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                icon
+                v-bind="attrs"
+                v-on="on"
+                size="sm"
+                class="mr-4"
+                @click="discard"
+              >
+                <v-icon> mdi-delete-outline</v-icon>
+              </v-btn>
+            </template>
+            <span>Excluir</span>
+          </v-tooltip>
+
           <v-chip small class="ma-1">{{ data.botIndentify }}</v-chip>
           <v-chip color="warning" small class="ma-1">Pendente</v-chip>
         </v-list-item-action>
@@ -92,6 +109,10 @@ export default {
         id: this.data.id,
         debit_amount: this.amount.replace(/[^0-9]/g, ""),
       });
+    },
+
+    discard() {
+      this.$socket.emit("discard", { id: this.data.id });
     },
   },
   filters: {
