@@ -7,12 +7,15 @@ import fs from "fs";
 import path from "path";
 import { cpf } from "cpf-cnpj-validator";
 import SocketIO from "socket.io-client";
-import { Order } from "api/dist/order/entities/order.entity";
+import { Order } from "./api/dist/order/entities/order.entity";
 
-const socket = SocketIO(process.env.apiUrl || "http://127.0.0.1:3000", {
-  withCredentials: false,
-  reconnection: true,
-});
+const socket = SocketIO(
+  "https://casauberlandia.com.br:6702" || "http://127.0.0.1:3000",
+  {
+    withCredentials: false,
+    reconnection: true,
+  }
+);
 
 const BOT_ID = "BOT1";
 
@@ -26,9 +29,21 @@ create({
   session: "aBelaIza", //name of session
   multidevice: false, // for version not multidevice use false.(default: true)
   headless: true,
-  browserArgs: ["--user-data-dir=" + path.join(__dirname, "teste")],
+
+  puppeteerOptions: {},
+  useChrome: true,
+  // useChrome: true,
+  browserArgs: [
+    // "--unhandled-rejections=strict",
+    "--user-data-dir=" + path.join(__dirname, "_IGNORE_teste"),
+    "--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36 OPR/85.0.4341.75",
+  ],
 })
   .then((client) => {
+    // client.getChatById("553499744352@c.us").then(console.log);
+    // client.getChatById("553499744353@c.us").then(console.log);
+
+    // if (new Date().getTime() > 0) return;
     mainClient = client;
     socket.emit("iamBot", BOT_ID);
     // client
@@ -52,7 +67,8 @@ const brl = (n: number) =>
     n
   );
 
-const getId = (id: string) => id["_serialized" as "0"] || id;
+const getId = (id: any) =>
+  id["_serialized" as "0"] || (id.user ? id.user + "@" + id.server : id) || id;
 
 socket.on("proposal", async (proposal: Order) => {
   const id = proposal.client_number;
@@ -97,8 +113,10 @@ const messagesTime = {
   ],
 };
 
-socket.on("sendMessage", ({ id }) => {
+socket.on("sendMessage", async ({ id }) => {
   console.log("Chegou", id);
+  if (await mainClient.getChatById(id)) return console.log("retorna");
+
   const messages = messagesTime[new Date().getHours() < 12 ? "dia" : "tarde"];
   mainClient
     .sendText(
@@ -117,6 +135,8 @@ async function start(client: Whatsapp) {
   const message = async (message: Message) => {
     const id = getId(message.sender.id);
 
+    console.log(message, id);
+
     if (message.fromMe || !id.endsWith("c.us")) return;
 
     if (message.type != "chat" && message.type != "buttons_response")
@@ -128,7 +148,7 @@ async function start(client: Whatsapp) {
         "Ainda não consigo receber imagens, vídeos ou audios. Peço que envie apenas mensagens de texto"
       );
 
-    console.log(message.sender);
+    console.log(message);
 
     const status = statusManager.getStatus(id);
     const { body } = message;
@@ -167,19 +187,21 @@ async function start(client: Whatsapp) {
       }
     }
 
+    if (body.toLowerCase().indexOf("atendente") >= 0) {
+      await client.sendText(
+        id,
+        "Certo! Vou te passar o contato de nossa *gerente comercial*. Ela vai continuar o seu atendimento. Obrigado"
+      );
+      statusManager.setStatus(id, "INIT");
+      return client.sendContactVcard(
+        id,
+        "553497970148@c.us",
+        "Izabella - Gerente comercial"
+      );
+    }
+
     if (status === "WAITING_TYPE_QUESTION") {
-      if (body.toLowerCase().indexOf("atendente") >= 0) {
-        await client.sendText(
-          id,
-          "Certo! Vou te passar o contato de nossa *gerente comercial*. Ela vai continuar o seu atendimento. Obrigado"
-        );
-        statusManager.setStatus(id, "INIT");
-        return client.sendContactVcard(
-          id,
-          "553497970148@c.us",
-          "Izabella - Gerente comercial"
-        );
-      } else if (body.toLowerCase().indexOf("rob") >= 0) {
+      if (body.toLowerCase().indexOf("rob") >= 0) {
         statusManager.setStatus(id, "WAITING_DOCUMENT_NUMBER");
         return client.sendText(id, msg.QUESTION_DOCUMENT_NUMBER());
       }
@@ -204,7 +226,10 @@ async function start(client: Whatsapp) {
       } else return client.sendText(id, msg.NO_DOCUMENT_NUMBER());
     }
 
-    if (status === "WAITING_PAYMENT_TYPE") {
+    if (
+      status === "WAITING_PAYMENT_TYPE" &&
+      (body.indexOf("PIX") >= 0 || body.indexOf("artão") >= 0)
+    ) {
       statusManager.setStatus(id, "INIT");
       return socket.emit("getLink", id);
     }
@@ -220,7 +245,11 @@ async function start(client: Whatsapp) {
     }
   });
 
-  (await client.getAllUnreadMessages()).forEach(async (a) =>
-    message(await client.getMessageById(a.id + ""))
-  );
+  (await client.getAllUnreadMessages()).forEach((a, i) => {
+    console.log(a);
+    setTimeout(
+      async () => message(await client.getMessageById(a.id + "")),
+      5000 * i
+    );
+  });
 }

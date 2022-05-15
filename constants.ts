@@ -17,7 +17,7 @@ export const msg = {
     "Meu nome é *Eva* sou 🤖 assistente virtual do Grupo Evera.",
 
   START_QUESTION: () => [
-    "Trabalhamos com soluções financeiras para pessoas quem tem restrições no *Serasa, SPC ou Boa Vista*. Da forma que fazendo você não paga nada de juros da dívida, e tem um desconto muito bom, podendo chegar á 95% do original valor da divida.\n\nPosso te fazer algumas perguntas?",
+    "Trabalhamos com soluções financeiras para pessoas quem tem restrições no *Serasa, SPC ou Boa Vista*. Da forma que fazendo você não paga nada de juros da dívida, e tem um desconto muito bom, podendo chegar á 95% do original valor da divida.\nTemos escritórios espalhados por todo o Brasil, inclusive aqui em *Uberlândia*.\n\nPosso te fazer algumas perguntas?",
     ["Não", "Sim, pode perguntar"],
   ],
   MAIN_QUESTION: () => [
@@ -36,7 +36,7 @@ export const msg = {
     "Ok! Em breve vou te ligar para confirmarmos o agendamento",
 
   TKS: () =>
-    "Ta bom! Muito obrigado!\n\nCaso queira indicar um amigo você ganha R$50. Se não tiver nenhum amigo para indicar, vou te mandar o link de nosso material de divulgação, se você postar em suas redes sociais e alguem se interessar, você recebe os R$50.\n\nhttps://bit.ly/3vIlu9t",
+    "Ta bom! Muito obrigado!\n\nCaso queira indicar um amigo você ganha R$50. Se não tiver nenhum amigo para indicar, vou te mandar o link de nosso material de divulgação, se você postar em suas redes sociais e alguem se interessar, você recebe os R$50.\n\nhttps://bit.ly/3vIlu9t\n\nNão esqueça me marcar no instagram @izabellacrisalves e @tc_everamg",
 
   UNDESTEND: () => [
     "Hmmmm... Não consegui entender sua mensagem. ",
