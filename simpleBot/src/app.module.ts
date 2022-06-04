@@ -17,7 +17,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
       database: "../data.sqlite",
       logging: false,
       entities: [path.join(__dirname, "/**/*.entity.*")],
-      synchronize: false,
+      synchronize: true,
     }),
     EventEmitterModule.forRoot(),
     OrderModule,
