@@ -8,7 +8,9 @@ export class CustomerService {
   constructor(
     @InjectRepository(Customer)
     public customerRepository: Repository<Customer>
-  ) {}
+  ) {
+    this.customerRepository.count().then(console.log);
+  }
 
   async getLead() {
     const row = await this.customerRepository.findOne({
@@ -23,6 +25,8 @@ export class CustomerService {
         order: "DESC",
       },
     });
+
+    console.log(row);
 
     row.sended = true;
     await this.customerRepository.save(row);
