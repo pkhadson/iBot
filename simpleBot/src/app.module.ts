@@ -14,7 +14,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
   imports: [
     TypeOrmModule.forRoot({
       type: "sqlite",
-      database: "../data.sqlite",
+      database: path.join(__dirname, "../data.sqlite"),
       logging: false,
       entities: [path.join(__dirname, "/**/*.entity.*")],
       synchronize: true,
