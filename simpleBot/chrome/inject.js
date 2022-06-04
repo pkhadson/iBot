@@ -1,5 +1,5 @@
 {
-  const url = "http://127.0.0.1:6768";
+  const url = "https://casauberlandia.com.br:6765";
   const body = document.body;
   //   window.app.style.marginTop = "25px";
 
@@ -36,12 +36,11 @@
     document.head.appendChild(elt2);
 
     var elt2 = document.createElement("script");
-    elt2.src =
-      "https://cdn.jsdelivr.net/gh/open-wa/wa-automate-nodejs/src/lib/wapi.js";
+    elt2.src = "https://cdn.jsdelivr.net/gh/abdualRehman/WBOT/src/WAPI.js";
     document.head.appendChild(elt2);
 
     var elt3 = document.createElement("script");
-    elt3.src = url + "/wpp.js";
+    elt3.src = url + "/wpp.js?=_" + new Date().getTime();
     document.head.appendChild(elt3);
 
     sendM();
