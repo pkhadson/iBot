@@ -61,19 +61,26 @@ Tudo o que um sonho precisa para ser realizado é alguém que acredite que ele p
   const send = (phone) => {
     const id = "5534" + phone.substr(-8) + "@c.us";
     setWaiting(id);
-    WAPI.sendMessage(id, getRandomMessage());
+    WAPI.sendMessageToID(id, getRandomMessage());
   };
 
   window.send = send;
 
-  const onMessage = (message) => {
-    if (message.fromMe) return;
-    if (!waiting.includes(message.from))
-      return console.log("MENSAGEM RECEBIDA - DESCARTADA");
-    removeWaiting(message.from);
+  const onMessage = (messages) => {
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      if (message.fromMe) return;
+      if (!waiting.includes(message.from))
+        return console.log("MENSAGEM RECEBIDA - DESCARTADA");
+      removeWaiting(message.from);
 
-    WAPI.sendMessage(message.from, mainMessage);
+      try {
+        WAPI.sendMessageToID(message.from, mainMessage);
+      } catch (err) {
+        console.log(".");
+      }
+    }
   };
 
-  WAPI.onAnyMessage(onMessage);
+  WAPI.waitNewMessages(false, onMessage);
 }
