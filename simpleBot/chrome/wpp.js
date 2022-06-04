@@ -67,6 +67,7 @@ Tudo o que um sonho precisa para ser realizado é alguém que acredite que ele p
   window.send = send;
 
   const onMessage = (messages) => {
+    console.log(messages);
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
       if (message.fromMe) return;
