@@ -1,0 +1,29 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Order {
+  botIndentify: String!
+  debitAmount: String!
+}
+
+type Query {
+  order(id: Int!): Order!
+}
+
+type Mutation {
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  removeOrder(id: Int!): Order!
+}
+
+input CreateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
