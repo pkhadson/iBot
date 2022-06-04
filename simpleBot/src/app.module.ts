@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { AppController } from "./app.controller";
@@ -18,6 +18,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
       logging: false,
       entities: [path.join(__dirname, "/**/*.entity.*")],
       synchronize: true,
+      logger: "debug",
     }),
     EventEmitterModule.forRoot(),
     OrderModule,
